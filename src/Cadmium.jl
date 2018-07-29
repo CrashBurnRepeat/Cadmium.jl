@@ -1,6 +1,14 @@
 module Cadmium
 
+using HermiteDualContouring
+using RegionTrees
+using ConstructiveSolidGeometry
+using StaticArrays
+using Plots
+
 import Plots.Shape
+
+export Plots
 
 function closest_key(d::Dict, new_key)
     if isempty(d)
@@ -25,12 +33,12 @@ function next_key(d::Dict, half_key, spent_half_key)
     return []
 end
 
-function assemble_shape(dcf::DualContourField)
+function assemble_shape(hdc::HermiteDualContour)
 #     p_dict = Dict{Array{Float64,1}, Array{Float64,1}}()
     p_dict=Dict()
     index_dict = Dict()
     empty_array = []#Array{Array{Float64,1},1}()
-    for leaf in allleaves(dcf.root)
+    for leaf in allleaves(hdc.root)
         if !isempty(leaf.data.residual)
             clean_keys=copy(empty_array)
             for p in leaf.data.p
@@ -83,21 +91,21 @@ function assemble_shape(dcf::DualContourField)
     return hcat(verts...)
 end
 
-function Plots.Shape(dcf::DualContourField)
-    verts = assemble_shape(dcf)
+function Plots.Shape(hdc::HermiteDualContour)
+    verts = assemble_shape(hdc)
     Plots.Shape(verts[1,:], verts[2,:])
 end
 
 function Plots.Shape(
-        csg::Surface,
+        csg::ConstructiveSolidGeometry.Surface,
         origin::AbstractArray,
         widths::AbstractArray,
         rtol=1e-3,
         atol=1e-3,
         surfcellmax=1e-1)
 
-    dcf=DualContourField(csg, origin, widths, rtol, atol, surfcellmax)
-    Plots.Shape(dcf)
+    hdc=HermiteDualContour(csg, origin, widths, rtol, atol, surfcellmax)
+    Plots.Shape(hdc)
 end
 
 
