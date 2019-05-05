@@ -1,0 +1,14 @@
+name = "Cadmium"
+uuid = "12a3f32e-099b-5143-9208-df7a73db8a2f"
+author = "David Perner <david@crashburnrepeat.com>"
+version = "0.0.0"
+
+[deps]
+ConstructiveSolidGeometry = "58134239-9cb3-5d87-adce-67568cd73197"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+RegionTrees = "dee08c22-ab7f-5625-9660-a9af2021b33f"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+HermiteDualContouring = "03385d10-d217-5087-be55-6cd5a34e1b57"
+
+[compat]
+julia = ">=0.7"
